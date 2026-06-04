@@ -41,7 +41,41 @@
     <hr style="border: 0.5px solid #2b3648;">
     <p style="font-size: 14px;">Total Deposited: $0.00 &nbsp; | &nbsp; Profit: $0.00</p>
   </div>
+<!-- Deposit Section -->
+<div style="padding: 0 20px; margin-top: 20px;">
+  <button onclick="showDeposit()" style="width: 100%; padding: 15px; background: #00cec9; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: #0b0e14;">DEPOSIT</button>
+</div>
 
+<!-- Deposit Details (Hidden by default) -->
+<div id="deposit-section" style="display:none; padding: 20px; margin: 15px; background: #151a23; border: 1px solid #2b3648; border-radius: 20px;">
+  <h3 style="margin-top: 0;">Deposit Details</h3>
+  
+  <p>BEP20 Address:</p>
+  <p id="bep20" style="background: #0b0e14; padding: 10px; border-radius: 8px; font-size: 12px; word-break: break-all; border: 1px solid #2b3648;">0xf9e9866ab52ff0e349843118a48b4236768163c0</p>
+  <button onclick="copyText('bep20')" style="background: #2b3648; border: none; padding: 8px 15px; color: white; border-radius: 5px; cursor: pointer;">Copy BEP20</button>
+
+  <p style="margin-top: 20px;">TRC20 Address:</p>
+  <p id="trc20" style="background: #0b0e14; padding: 10px; border-radius: 8px; font-size: 12px; word-break: break-all; border: 1px solid #2b3648;">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</p>
+  <button onclick="copyText('trc20')" style="background: #2b3648; border: none; padding: 8px 15px; color: white; border-radius: 5px; cursor: pointer;">Copy TRC20</button>
+</div>
+
+<script>
+  function showDeposit() {
+    var section = document.getElementById('deposit-section');
+    if (section.style.display === "none") {
+      section.style.display = "block";
+    } else {
+      section.style.display = "none";
+    }
+  }
+
+  function copyText(id) {
+    var text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Address Copied!");
+    });
+  }
+</script>
   <div class="nav-bar">
     <div class="nav-item">🏠<br>Dashboard</div>
     <div class="nav-item">💸<br>Withdraw</div>
