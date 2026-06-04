@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-  body { background: linear-gradient(to right, #4facfe, #8e44ad); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-  .card { background: white; padding: 30px; border-radius: 15px; width: 300px; }
-  input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-  button { width: 100%; padding: 12px; background: linear-gradient(to right, #4facfe, #9d50bb); color: white; border: none; border-radius: 8px; cursor: pointer; }
-</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { 
+      background-color: #0b0e14; 
+      color: #ffffff; 
+      font-family: 'Segoe UI', sans-serif; 
+      margin: 0; 
+      padding: 20px; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+    }
+    .card { 
+      background: #151a23; 
+      border: 1px solid #2b3648; 
+      border-radius: 20px; 
+      padding: 30px; 
+      width: 100%; 
+      max-width: 400px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    input { 
+      width: 100%; 
+      padding: 15px; 
+      margin: 10px 0; 
+      background: #0b0e14; 
+      border: 1px solid #2b3648; 
+      border-radius: 12px; 
+      color: white; 
+      box-sizing: border-box; 
+    }
+    button { 
+      width: 100%; 
+      padding: 15px; 
+      background: linear-gradient(90deg, #00b894, #00cec9); 
+      color: white; 
+      border: none; 
+      border-radius: 12px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      margin-top: 10px;
+    }
+    a { color: #00cec9; text-decoration: none; }
+  </style>
 </head>
 <body>
+
   <div class="card">
     <h2>Signup</h2>
     <input type="text" id="name" placeholder="Full Name">
