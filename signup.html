@@ -87,6 +87,7 @@
       createdAt: new Date().toISOString()
     })
     .then(() => { alert("Registration Successful!"); })
+      window.location.href = "dashboard.html";
     .catch((error) => { alert("Error: " + error.message); });
   }
 </script>
