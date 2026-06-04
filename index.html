@@ -1,98 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Easy Profit</title>
+<style>
+  body { background: linear-gradient(to right, #4facfe, #8e44ad); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; margin: 0; padding: 20px; }
+  .card { background: white; padding: 30px; border-radius: 15px; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: center; margin-bottom: 20px; }
+  input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+  button { width: 100%; padding: 12px; background: linear-gradient(to right, #4facfe, #9d50bb); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+  #dashboard { display: none; }
+  .policy-box { background: #1a1a1a; color: #2ecc71; padding: 15px; border-radius: 8px; font-size: 13px; margin: 20px 0; }
+  .referral-box { background: #fdf2e9; color: #d35400; padding: 10px; border-radius: 8px; font-size: 13px; margin: 10px 0; border: 1px dashed #d35400; }
+  .hr-line { margin: 20px 0; border: 0; border-top: 1px solid #eee; }
+</style>
 </head>
 <body>
 
-    <h1>Easy Profit App</h1>
+  <!-- Login Form -->
+  <div class="card" id="login-section">
+    <h2>Login Form</h2>
+    <input type="email" id="email" placeholder="Email or Phone">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="loginUser()">LOGIN</button>
+    <p>Not a member? <a href="#">Signup now</a></p>
+  </div>
 
-    <!-- Login Section -->
-    <div id="login-section">
-        <input type="email" id="email" placeholder="Enter Email">
-        <input type="password" id="password" placeholder="Enter Password">
-        <button onclick="loginUser()">Login</button>
-
-        <h3>Register New Account</h3>
-        <input type="email" id="signup-email" placeholder="Email">
-        <input type="password" id="signup-password" placeholder="Password">
-        <input type="text" id="referral-code" placeholder="Referral Code (Optional)">
-        <button onclick="registerUser()">Register</button>
+  <!-- Dashboard Section -->
+  <div class="card" id="dashboard">
+    <h2>Main Wallet Dashboard</h2>
+    <p>Balance: <span id="balance">0</span> USD</p>
+    
+    <!-- Investment Policy Section -->
+    <div class="policy-box">
+      <strong>Investment Policy</strong><br>
+      Enjoy a 2% daily profit on your deposited amount. Your total profit will be available for withdrawal after 30 days.
     </div>
 
-    <!-- Dashboard Section -->
-    <div id="dashboard" style="display:none; padding: 20px; border: 2px solid #333; margin-top: 20px;">
-        <h2>Main Wallet Dashboard</h2>
-        <p>Balance: <span id="balance">0</span> USD</p>
-        
-        <hr>
-        <h3>Deposit (Min $100)</h3>
-         <p>BEP20:</p>
-<p id="bep20-address" style="word-break: break-all;">0xf9e9866ab52ff0e349843118a48b4236768163d0</p>
-<button onclick="copyToClipboard('bep20-address')">Copy Address</button>
-        <p>TRC20:</p>
-<p id="trc20-address" style="word-break: break-all;">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</p>
-<button onclick="copyToClipboard('trc20-address')">Copy TRC20</button>
-        <button onclick="alert('Your deposit request has been submitted. Admin will verify within 24 hours.')">Deposit Request</button>
-        
-        <hr>
-        <h3>Withdrawal</h3>
-        <p style="color:red;">Note: Withdrawal is locked for 30 days after registration.</p>
-        <input type="text" id="withdraw-address" placeholder="Enter Wallet Address">
-        <button disabled>Withdraw (Locked)</button>
-        
-        <hr>
-        <h3>Referral System</h3>
-        <p>Get 5% commission on your referral's deposit!</p>
+    <!-- Referral System Section -->
+    <div class="referral-box">
+      <strong>Referral System</strong><br>
+      Get a 5% commission on your referral's deposit!
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    <hr class="hr-line">
+    <h3>Deposit (Min $100)</h3>
+    <p>BEP20 Address:</p>
+    <p id="bep20-address" style="word-break: break-all; font-size: 12px;">0xf9e9866ab52ff0e349843118a48b4236768163d0</p>
+    <button onclick="copyToClipboard('bep20-address')">Copy BEP20</button>
+    
+    <p style="margin-top:15px;">TRC20 Address:</p>
+    <p id="trc20-address" style="word-break: break-all; font-size: 12px;">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</p>
+    <button onclick="copyToClipboard('trc20-address')">Copy TRC20</button>
 
-        const firebaseConfig = {
-  apiKey: "AIzaSyBErejMEZ5G5W9SFgHu3VP6eauJ6qH01tY",
-  authDomain: "daily-profit-f3c64.firebaseapp.com",
-  projectId: "daily-profit-f3c64",
-  storageBucket: "daily-profit-f3c64.firebasestorage.app",
-  messagingSenderId: "626488854693",
-  appId: "1:626488854693:web:bea3a1ee5c04e76341a54c"
-};
+    <hr class="hr-line">
+    <h3>Withdrawal</h3>
+    <input type="text" placeholder="Enter Wallet Address">
+    <button style="background: #e74c3c;">Withdraw (Locked)</button>
+  </div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        window.loginUser = async () => {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                alert("Login Successful!");
-                document.getElementById("login-section").style.display = "none";
-                document.getElementById("dashboard").style.display = "block";
-            } catch (e) {
-                alert("Login Failed: " + e.message);
-            }
-        };
-
-        window.registerUser = async () => {
-            const email = document.getElementById("signup-email").value;
-            const password = document.getElementById("signup-password").value;
-            try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                alert("Registration Successful! Now you can Login.");
-            } catch (e) {
-                alert("Error: " + e.message);
-            }
-        };
-    </script>
-    <script>
-function copyToClipboard(elementId) {
-  var text = document.getElementById(elementId).innerText;
-  navigator.clipboard.writeText(text).then(function() {
-    alert("Address copied!");
-  });
-}
+<script>
+  function loginUser() {
+    alert("Login Successful!");
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+  }
+  function copyToClipboard(id) {
+    var text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("Address Copied: " + text);
+  }
 </script>
+
 </body>
 </html>
