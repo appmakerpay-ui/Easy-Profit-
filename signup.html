@@ -17,25 +17,28 @@
     <button onclick="registerUser()">REGISTER</button>
     <p>Already have an account? <a href="index.html">Login here</a></p>
   </div>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    appId: "YOUR_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+<scri<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-  function registerUser() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBErejMEZ5G5W9SFgHu3VP6eauJ6qH01tY",
+    authDomain: "daily-profit-f3c64.firebaseapp.com",
+    projectId: "daily-profit-f3c64",
+    storageBucket: "daily-profit-f3c64.firebasestorage.app",
+    messagingSenderId: "626488854693",
+    appId: "1:626488854693:web:bea3a1ee5c04e76341a54c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.registerUser = function() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    db.collection("users").doc(email).set({
+    setDoc(doc(db, "users", email), {
       name: name,
       email: email,
       password: password,
@@ -49,6 +52,7 @@
       alert("Error: " + error.message);
     });
   }
+</script>
 </script>
 </body>
 </html>
