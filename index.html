@@ -61,6 +61,7 @@
     alert("Login Successful!");
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
+    window.location.href = "dashboard.html";
   }
   function copyToClipboard(id) {
     var text = document.getElementById(id).innerText;
