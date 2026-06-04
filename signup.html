@@ -2,10 +2,10 @@
 <html>
 <head>
 <style>
-  body { background: linear-gradient(to right, #4facfe, #8e44ad); min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
-  .card { background: white; padding: 30px; border-radius: 15px; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: center; }
+  body { background: linear-gradient(to right, #4facfe, #8e44ad); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .card { background: white; padding: 30px; border-radius: 15px; width: 300px; }
   input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-  button { width: 100%; padding: 12px; background: linear-gradient(to right, #4facfe, #9d50bb); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+  button { width: 100%; padding: 12px; background: linear-gradient(to right, #4facfe, #9d50bb); color: white; border: none; border-radius: 8px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -17,7 +17,8 @@
     <button onclick="registerUser()">REGISTER</button>
     <p>Already have an account? <a href="index.html">Login here</a></p>
   </div>
-<scri<script type="module">
+
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
   import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
@@ -45,15 +46,9 @@
       balance: 0,
       createdAt: new Date().toISOString()
     })
-    .then(() => {
-      alert("Registration Successful!");
-    })
-    .catch((error) => {
-      alert("Error: " + error.message);
-    });
+    .then(() => { alert("Registration Successful!"); })
+    .catch((error) => { alert("Error: " + error.message); });
   }
-</script>
 </script>
 </body>
 </html>
-
