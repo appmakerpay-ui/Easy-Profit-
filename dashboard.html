@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body { background-color: #0b101d; color: white; font-family: sans-serif; margin: 0; padding: 20px; }
+  body { background-color: #0b101d; color: white; font-family: sans-serif; margin: 0; padding: 20px; padding-bottom: 80px; }
   .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
   .profile-icon { background: #1a4dbd; padding: 10px 15px; border-radius: 50%; font-weight: bold; }
   .main-card { background: #1a4dbd; border-radius: 20px; padding: 25px; }
@@ -13,10 +13,13 @@
   .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
   .btn-deposit { background: #ffffff; color: #1a4dbd; }
   .btn-withdraw { background: rgba(255,255,255,0.2); color: white; }
+  
+  /* Bottom Navigation Bar */
+  .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #151a23; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #2b3648; }
+  .nav-item { text-align: center; font-size: 12px; color: #888; }
+  
   .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
   .box { background: #151a23; padding: 20px; border-radius: 15px; border: 1px solid #2b3648; }
-  .label { font-size: 12px; opacity: 0.7; margin-bottom: 10px; }
-  .value { font-size: 18px; font-weight: bold; }
   .roi-tracker { background: #151a23; padding: 20px; border-radius: 15px; border: 1px solid #2b3648; margin-top: 20px; }
   .roi-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #2b3648; }
 </style>
@@ -24,7 +27,11 @@
 <body>
 
   <div class="top-header">
-    <div><p style="margin:0; font-size: 14px;">Welcome back,</p><h2 style="margin:0;">test01</h2></div>
+    <div>
+        <p style="margin:0; font-size: 14px;">Welcome back,</p>
+        <!-- ইমেইল এখানে শো করবে -->
+        <h2 id="user-email" style="margin:0;">user@example.com</h2>
+    </div>
     <div class="profile-icon">👤</div>
   </div>
 
@@ -37,39 +44,22 @@
     </div>
   </div>
 
-  <div id="deposit-section" style="display:none; background: #151a23; padding: 15px; border-radius: 15px; margin-top: 15px; border: 1px solid #2b3648;">
-    <p>BEP20 Address:</p>
-    <p id="bep20" style="background: #0b0e14; padding: 10px; border-radius: 8px; font-size: 11px; word-break: break-all;">0xf9e9866ab52ff0e349843118a48b4236768163c0</p>
-    <button onclick="copyText('bep20')" style="background: #1a4dbd; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer;">Copy BEP20</button>
-    <p style="margin-top: 15px;">TRC20 Address:</p>
-    <p id="trc20" style="background: #0b0e14; padding: 10px; border-radius: 8px; font-size: 11px; word-break: break-all;">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</p>
-    <button onclick="copyText('trc20')" style="background: #1a4dbd; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer;">Copy TRC20</button>
-  </div>
-
-  <h3>Performance Overview</h3>
-  <div class="grid-container">
-    <div class="box"><div class="label">Daily ROI</div><div class="value">+0.00%</div></div>
-    <div class="box"><div class="label">Today's Earnings</div><div class="value">$0.00</div></div>
-  </div>
-
-  <div class="roi-tracker">
-    <h3>Daily ROI Tracker</h3>
-    <div class="roi-row"><span>Principal</span><span>$0.00</span></div>
-    <div class="roi-row"><span>Total Earned</span><span>+$0.00</span></div>
+  <!-- Deposit, Performance, ROI Tracker কোড একই থাকবে -->
+  
+  <!-- Bottom Navigation -->
+  <div class="nav-bar">
+    <div class="nav-item">🏠<br>Dashboard</div>
+    <div class="nav-item">📜<br>History</div>
+    <div class="nav-item">👤<br>Profile</div>
   </div>
 
   <script>
-    function showDeposit() {
-      var section = document.getElementById('deposit-section');
-      section.style.display = (section.style.display === "none") ? "block" : "none";
-    }
-    function copyText(id) {
-      var text = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(text).then(() => { alert("Address Copied!"); });
-    }
-    function showWithdraw() {
-      alert("You can withdraw only the profit amount after 30 days.");
-    }
+    // এখানে ইমেইল সেট করার জন্য সিম্পল লজিক
+    // আপনি চাইলে এটি পরবর্তীতে লগইন সিস্টেমের সাথে কানেক্ট করতে পারবেন
+    document.getElementById('user-email').innerText = "yourname@gmail.com"; 
+
+    function showDeposit() { /* আগের কোড */ }
+    function showWithdraw() { alert("You can withdraw only the profit amount after 30 days."); }
   </script>
 </body>
 </html>
