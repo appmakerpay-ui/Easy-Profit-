@@ -58,6 +58,8 @@
 
 <script>
   function loginUser() {
+    const email = document.getElementById("email").value;
+  localStorage.setItem("userEmail", email);
     alert("Login Successful!");
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
