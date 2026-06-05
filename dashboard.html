@@ -3,59 +3,78 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body { background-color: #0b101d; color: white; font-family: sans-serif; margin: 0; padding: 20px; padding-bottom: 90px; }
-  .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-  .profile-pic { width: 50px; height: 50px; background: #1a4dbd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; }
-  .main-card { background: #1a4dbd; border-radius: 20px; padding: 25px; }
-  .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-  .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+  body { background-color: #0b101d; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; padding-bottom: 100px; }
+  .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+  .profile-pic { width: 50px; height: 50px; background: #1a4dbd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; border: 2px solid #2b3648; }
+  .main-card { background: #1a4dbd; border-radius: 20px; padding: 25px; box-shadow: 0 4px 15px rgba(26,77,189,0.3); }
+  .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+  .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
   .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #151a23; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #2b3648; z-index: 1000; }
   .page { display: none; }
   .active { display: block; }
   .box { background: #151a23; padding: 20px; border-radius: 15px; border: 1px solid #2b3648; margin-top: 20px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+  .ref-box { background: skyblue; color: #1a4dbd; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 20px; margin-top: 10px; }
 </style>
 </head>
 <body>
 
-  <!-- Dashboard Page -->
+  <!-- Dashboard -->
   <div id="dashboard" class="page active">
     <div class="top-header">
-      <div><p style="margin:0; font-size: 14px;">Welcome back,</p><h2 id="display-name">User</h2></div>
+      <div><p style="margin:0; opacity:0.7;">Welcome back,</p><h2 id="display-name" style="margin:0;">User</h2></div>
       <div class="profile-pic" onclick="showPage('profile')">👤</div>
     </div>
     <div class="main-card">
-      <div>TOTAL BALANCE</div>
+      <div style="opacity:0.8;">TOTAL BALANCE</div>
       <h1 style="margin:10px 0;">$0.00</h1>
       <div class="btn-group">
         <button class="btn" onclick="toggleDeposit()" style="background:#fff; color:#1a4dbd;">+ Deposit</button>
-        <button class="btn" onclick="alert('You can withdraw only the profit amount after 30 days.')" style="background:rgba(255,255,255,0.2);">↑ Withdraw</button>
+        <button class="btn" onclick="alert('You can withdraw only the profit amount after 30 days.')" style="background:rgba(255,255,255,0.2); color:#fff;">↑ Withdraw</button>
       </div>
     </div>
     <div id="deposit-box" class="box" style="display:none;">
       <p>BEP20: <span id="bep">0xf9e9866ab52ff0e349843118a48b4236768163c0</span> <button onclick="copy('bep')">Copy</button></p>
       <p>TRC20: <span id="trc">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</span> <button onclick="copy('trc')">Copy</button></p>
     </div>
+    <div class="grid">
+      <div class="box"><div style="opacity:0.7; font-size:12px;">Daily ROI</div><div style="font-size:18px; font-weight:bold;">+2.00%</div></div>
+      <div class="box"><div style="opacity:0.7; font-size:12px;">Daily Income</div><div style="font-size:18px; font-weight:bold;">$0.00</div></div>
+    </div>
     <div class="box">
-      <h3>Performance Overview</h3>
-      <p>Deposit er 2% profit added hobe per day.</p>
+      <h3>Investment Policy</h3>
+      <p style="opacity:0.8;">Enjoy a consistent daily return of 2% on your total deposit amount.</p>
     </div>
   </div>
 
-  <!-- History Page -->
-  <div id="history" class="page"><div class="box"><h3>History</h3><p>Data empty</p></div></div>
-
   <!-- Referral Page -->
-  <div id="referral" class="page"><div class="box"><h3>Referral</h3><p>Refer korle 5% commission pabe deposit er upor.</p><p>Code: <input type="text" id="refCode" value="USER123" readonly> <button onclick="copy('refCode')">Copy</button></p></div></div>
+  <div id="referral" class="page">
+    <div class="box">
+      <h3>Referral Program</h3>
+      <p>Invite friends and earn a 5% commission on their total deposit amount.</p>
+      <div class="ref-box" id="refCode">f2zs59wm</div>
+      <button onclick="copy('refCode')" style="width:100%; margin-top:10px; padding:10px;">Copy Referral Code</button>
+    </div>
+  </div>
 
   <!-- Profile Page -->
-  <div id="profile" class="page"><div class="box"><h3>Profile</h3><input type="text" id="nameInput" placeholder="Enter Name" oninput="updateName()"> <p>Change Photo: <input type="file" onchange="uploadPic(event)"></p></div></div>
+  <div id="profile" class="page">
+    <div class="box" style="text-align:center;">
+      <div class="profile-pic" style="margin: 0 auto 20px auto; width:80px; height:80px;">👤</div>
+      <input type="text" id="nameInput" placeholder="Enter your name" oninput="updateName()" style="padding:10px; width:80%; border-radius:5px; border:none; text-align:center;">
+      <p style="margin-top:20px;">Upload Profile Photo</p>
+      <input type="file" onchange="alert('Photo updated!')">
+    </div>
+  </div>
+
+  <div id="history" class="page"><div class="box"><h3>History</h3><p style="opacity:0.5;">No transactions found.</p></div></div>
 
   <!-- Nav Bar -->
   <div class="nav-bar">
-    <div onclick="showPage('dashboard')">🏠<br>Dashboard</div>
-    <div onclick="showPage('history')">📜<br>History</div>
-    <div onclick="showPage('referral')">🔗<br>Referral</div>
-    <div onclick="showPage('profile')">👤<br>Profile</div>
+    <div onclick="showPage('dashboard')" style="text-align:center;">🏠<br>Dashboard</div>
+    <div onclick="showPage('history')" style="text-align:center;">📜<br>History</div>
+    <div onclick="showPage('referral')" style="text-align:center;">🔗<br>Referral</div>
+    <div onclick="showPage('profile')" style="text-align:center;">👤<br>Profile</div>
   </div>
 
   <script>
@@ -64,9 +83,8 @@
       document.getElementById(id).classList.add('active');
     }
     function toggleDeposit() { document.getElementById('deposit-box').style.display = (document.getElementById('deposit-box').style.display === 'none') ? 'block' : 'none'; }
-    function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText || document.getElementById(id).value); alert("Copied!"); }
+    function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied to clipboard!"); }
     function updateName() { document.getElementById('display-name').innerText = document.getElementById('nameInput').value || "User"; }
-    function uploadPic(e) { /* Photo upload logic */ alert("Photo updated!"); }
   </script>
 </body>
 </html>
