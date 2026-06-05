@@ -19,7 +19,6 @@
 </head>
 <body>
 
-  <!-- Dashboard -->
   <div id="dashboard" class="page active">
     <div class="top-header">
       <div><p style="margin:0; opacity:0.7;">Welcome back,</p><h2 id="display-name" style="margin:0;">User</h2></div>
@@ -33,43 +32,31 @@
         <button class="btn" onclick="alert('You can withdraw only the profit amount after 30 days.')" style="background:rgba(255,255,255,0.2); color:#fff;">↑ Withdraw</button>
       </div>
     </div>
-    <div id="deposit-box" class="box" style="display:none;">
-      <p>BEP20: <span id="bep">0xf9e9866ab52ff0e349843118a48b4236768163c0</span> <button onclick="copy('bep')">Copy</button></p>
-      <p>TRC20: <span id="trc">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</span> <button onclick="copy('trc')">Copy</button></p>
+
+    <div id="deposit-box" class="box" style="display:none; background:#1a4dbd; color:white;">
+        <h3>Deposit Method</h3>
+        <p>BEP20: <span id="bep">0xf9e9866ab52ff0e349843118a48b4236768163c0</span> <button onclick="copy('bep')">Copy</button></p>
+        <p>TRC20: <span id="trc">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</span> <button onclick="copy('trc')">Copy</button></p>
+        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.3);">
+        <div style="background:white; padding:15px; border-radius:10px; color:#333;">
+            <p style="font-weight:bold; margin-top:0;">Payment Transaction ID Proof:</p>
+            <input type="text" id="txid" placeholder="Enter TXID" style="width:95%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px;">
+            <p style="font-weight:bold; margin-top:0;">Upload Payment Screenshot:</p>
+            <input type="file" id="imageFile" accept="image/*" style="width:100%; margin-bottom:15px;">
+            <button onclick="submitProof()" style="width:100%; padding:12px; background:#1a4dbd; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Submit Proof</button>
+        </div>
     </div>
+
     <div class="grid">
       <div class="box"><div style="opacity:0.7; font-size:12px;">Daily ROI</div><div style="font-size:18px; font-weight:bold;">+2.00%</div></div>
       <div class="box"><div style="opacity:0.7; font-size:12px;">Daily Income</div><div style="font-size:18px; font-weight:bold;">$0.00</div></div>
     </div>
-    <div class="box">
-      <h3>Investment Policy</h3>
-      <p style="opacity:0.8;">Enjoy a consistent daily return of 2% on your total deposit amount.</p>
-    </div>
   </div>
 
-  <!-- Referral Page -->
-  <div id="referral" class="page">
-    <div class="box">
-      <h3>Referral Program</h3>
-      <p>Invite friends and earn a 5% commission on their total deposit amount.</p>
-      <div class="ref-box" id="refCode">f2zs59wm</div>
-      <button onclick="copy('refCode')" style="width:100%; margin-top:10px; padding:10px;">Copy Referral Code</button>
-    </div>
-  </div>
+  <div id="referral" class="page"><div class="box"><h3>Referral Program</h3><div class="ref-box" id="refCode">f2zs59wm</div><button onclick="copy('refCode')" style="width:100%; margin-top:10px; padding:10px;">Copy Referral Code</button></div></div>
+  <div id="profile" class="page"><div class="box" style="text-align:center;"><input type="text" id="nameInput" placeholder="Enter your name" oninput="updateName()" style="padding:10px; width:80%;"></div></div>
+  <div id="history" class="page"><div class="box"><h3>History</h3></div></div>
 
-  <!-- Profile Page -->
-  <div id="profile" class="page">
-    <div class="box" style="text-align:center;">
-      <div class="profile-pic" style="margin: 0 auto 20px auto; width:80px; height:80px;">👤</div>
-      <input type="text" id="nameInput" placeholder="Enter your name" oninput="updateName()" style="padding:10px; width:80%; border-radius:5px; border:none; text-align:center;">
-      <p style="margin-top:20px;">Upload Profile Photo</p>
-      <input type="file" onchange="alert('Photo updated!')">
-    </div>
-  </div>
-
-  <div id="history" class="page"><div class="box"><h3>History</h3><p style="opacity:0.5;">No transactions found.</p></div></div>
-
-  <!-- Nav Bar -->
   <div class="nav-bar">
     <div onclick="showPage('dashboard')" style="text-align:center;">🏠<br>Dashboard</div>
     <div onclick="showPage('history')" style="text-align:center;">📜<br>History</div>
@@ -77,45 +64,57 @@
     <div onclick="showPage('profile')" style="text-align:center;">👤<br>Profile</div>
   </div>
 
-  <script>
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-    function toggleDeposit() { document.getElementById('deposit-box').style.display = (document.getElementById('deposit-box').style.display === 'none') ? 'block' : 'none'; }
-    function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied to clipboard!"); }
-    function updateName() { document.getElementById('display-name').innerText = document.getElementById('nameInput').value || "User"; }
-  </script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
 
-<script>
-  // Firebase Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBErejMEZ5G5W9SFgHu3VP6eauJ6qH01tY",
-    authDomain: "daily-profit-f3c64.firebaseapp.com",
-    projectId: "daily-profit-f3c64",
-    storageBucket: "daily-profit-f3c64.firebasestorage.app",
-    messagingSenderId: "626488854693",
-    appId: "1:626488854693:web:bea3a1ee5c04e76341a54c"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBErejMEZ5G5W9SFgHu3VP6eauJ6qH01tY",
+      authDomain: "daily-profit-f3c64.firebaseapp.com",
+      projectId: "daily-profit-f3c64",
+      storageBucket: "daily-profit-f3c64.firebasestorage.app",
+      messagingSenderId: "626488854693",
+      appId: "1:626488854693:web:bea3a1ee5c04e76341a54c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+    const userEmail = localStorage.getItem("userEmail");
 
-  // Check email from localStorage
-  const userEmail = localStorage.getItem("userEmail");
+    if (userEmail) {
+      db.collection("users").doc(userEmail).onSnapshot((doc) => {
+        if (doc.exists) document.getElementById("balance").innerText = doc.data().balance;
+      });
+    } else { window.location.href = "index.html"; }
 
-  if (userEmail) {
-    db.collection("users").doc(userEmail).onSnapshot((doc) => {
-      if (doc.exists) {
-        // Update balance on the dashboard
-        document.getElementById("balance").innerText = doc.data().balance;
-      }
-    });
-  } else {
-    // Redirect to login if email is not found
-    window.location.href = "index.html";
-  }
-</script>
+    function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    function toggleDeposit() { document.getElementById('deposit-box').style.display = (document.getElementById('deposit-box').style.display === 'none') ? 'block' : 'none'; }
+    function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied!"); }
+    function updateName() { document.getElementById('display-name').innerText = document.getElementById('nameInput').value || "User"; }
+
+    function submitProof() {
+        const txid = document.getElementById("txid").value;
+        const file = document.getElementById("imageFile").files[0];
+        if (!txid || !file) { alert("Please enter TXID and upload a screenshot!"); return; }
+
+        const storageRef = storage.ref('proofs/' + Date.now() + "_" + file.name);
+        storageRef.put(file).then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+                db.collection("deposits").add({
+                    email: userEmail,
+                    txid: txid,
+                    imageUrl: url,
+                    status: "pending",
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    alert("Proof submitted successfully!");
+                    document.getElementById('deposit-box').style.display = 'none';
+                    document.getElementById("txid").value = "";
+                });
+            });
+        });
+    }
+  </script>
 </body>
 </html>
