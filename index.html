@@ -1,76 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-  body { background: linear-gradient(to right, #4facfe, #8e44ad); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; margin: 0; padding: 20px; }
-  .card { background: white; padding: 30px; border-radius: 15px; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: center; margin-bottom: 20px; }
-  input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-  button { width: 100%; padding: 12px; background: linear-gradient(to right, #4facfe, #9d50bb); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-  #dashboard { display: none; }
-  .policy-box { background: #1a1a1a; color: #2ecc71; padding: 15px; border-radius: 8px; font-size: 13px; margin: 20px 0; }
-  .referral-box { background: #fdf2e9; color: #d35400; padding: 10px; border-radius: 8px; font-size: 13px; margin: 10px 0; border: 1px dashed #d35400; }
-  .hr-line { margin: 20px 0; border: 0; border-top: 1px solid #eee; }
-</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <style>
+        body { background: linear-gradient(to right, #4facfe, #8e44ad); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; margin: 0; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 15px; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: center; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: linear-gradient(to right, #4facfe, #9d50bb); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+    </style>
 </head>
 <body>
 
-  <!-- Login Form -->
-  <div class="card" id="login-section">
-    <h2>Login Form</h2>
-    <input type="email" id="email" placeholder="Email or Phone">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="loginUser()">LOGIN</button>
-    <p>Not a member? <a href="signup.html">Signup now</a></p>
-  </div>
-
-  <!-- Dashboard Section -->
-  <div class="card" id="dashboard">
-    <h2>Main Wallet Dashboard</h2>
-    <p>Balance: <span id="balance">0</span> USD</p>
-    
-    <!-- Investment Policy Section -->
-    <div class="policy-box">
-      <strong>Investment Policy</strong><br>
-      Enjoy a 2% daily profit on your deposited amount. Your total profit will be available for withdrawal after 30 days.
+    <div class="card">
+        <h2>Register</h2>
+        <input type="email" id="regEmail" placeholder="Email">
+        <input type="password" id="regPass" placeholder="Password">
+        <input type="text" id="refBy" placeholder="Referral Code (Optional)">
+        <button onclick="registerUser()">REGISTER</button>
     </div>
 
-    <!-- Referral System Section -->
-    <div class="referral-box">
-      <strong>Referral System</strong><br>
-      Get a 5% commission on your referral's deposit!
+    <div class="card">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPass" placeholder="Password">
+        <button onclick="loginUser()">LOGIN</button>
     </div>
 
-    <hr class="hr-line">
-    <h3>Deposit (Min $100)</h3>
-    <p>BEP20 Address:</p>
-    <p id="bep20-address" style="word-break: break-all; font-size: 12px;">0xf9e9866ab52ff0e349843118a48b4236768163d0</p>
-    <button onclick="copyToClipboard('bep20-address')">Copy BEP20</button>
-    
-    <p style="margin-top:15px;">TRC20 Address:</p>
-    <p id="trc20-address" style="word-break: break-all; font-size: 12px;">TKuTTWK7inXRtg6Kic2K59jPCSXaVRqahB</p>
-    <button onclick="copyToClipboard('trc20-address')">Copy TRC20</button>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
 
-    <hr class="hr-line">
-    <h3>Withdrawal</h3>
-    <input type="text" placeholder="Enter Wallet Address">
-    <button style="background: #e74c3c;">Withdraw (Locked)</button>
-  </div>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBErejMEZ5G5W9SFgHu3VP6eauJ6qH01tY",
+            authDomain: "daily-profit-f3c64.firebaseapp.com",
+            projectId: "daily-profit-f3c64",
+            storageBucket: "daily-profit-f3c64.firebasestorage.app",
+            messagingSenderId: "626488854693",
+            appId: "1:626488854693:web:bea3a1ee5c04e76341a54c"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
-<script>
-  function loginUser() {
-    const email = document.getElementById("email").value;
-  localStorage.setItem("userEmail", email);
-    alert("Login Successful!");
-    document.getElementById('login-section').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    window.location.href = "dashboard.html";
-  }
-  function copyToClipboard(id) {
-    var text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text);
-    alert("Address Copied: " + text);
-  }
-</script>
+        // Register Function
+        function registerUser() {
+            const email = document.getElementById("regEmail").value;
+            const password = document.getElementById("regPass").value;
+            const refBy = document.getElementById("refBy").value;
 
+            if(!email || !password) { alert("Please enter email and password"); return; }
+
+            auth.createUserWithEmailAndPassword(email, password).then(() => {
+                db.collection("users").doc(email).set({
+                    email: email,
+                    balance: 0,
+                    referredBy: refBy || "None"
+                }).then(() => {
+                    alert("Registration Successful!");
+                    localStorage.setItem("userEmail", email);
+                    window.location.href = "dashboard.html";
+                });
+            }).catch(e => alert(e.message));
+        }
+
+        // Login Function
+        function loginUser() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPass").value;
+
+            auth.signInWithEmailAndPassword(email, password).then(() => {
+                localStorage.setItem("userEmail", email);
+                window.location.href = "dashboard.html";
+            }).catch(e => alert(e.message));
+        }
+    </script>
 </body>
 </html>
